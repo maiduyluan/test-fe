@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+<!-- 
+pages: chứa 2 page là home và detail , home hiển thị các blog user, detail hiện chi tiết blog của user
+modules: chứa những component thuộc page đó
+features: active (  state các nút bấm ) , blog ( state filter blog và user id , blogData dùng thunk để call api cho home để xử lý và đặt cờ khi dùng infinitscroll ), service dùng để call Api
+constants: dùng để khai báo các biến (vd như tạo object button để map ra)
+components: dùng để tạo những component cần sài ở nhiều nơi
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1.Home InfiniteScroll gọi hàm loadMore ( truyền page từ thuộc tính pageStart ) 
+-> Kiểm tra nếu isFullList là false thì dispatch tới action fetchListDataPaging trong blogData
+-> fetchListDataPaging nhận được page và gọi api, khi nhận được res và lưu vào state, list sẽ bao gồm data cũ( nếu có ) và data mới - isFullList sẽ trở thành true khi lần call cuối cùng không còn phần tử nào ở trong mảng trả về
+-> Gán list vào data bằng useSelector
+-> Tạo biến dataRender để gán các các data đã được lọc
+-> Render 
 
-## Available Scripts
+2.Bấm vào Sort thì set state toggleSort thành true , hiển thị 2 nút sort name và sort like
+-> Chọn nút nào thì nút đó sẽ set state typeBlog thành 'name' hoặc 'like' để so sánh đồng thời set lại state toggleSort thành false để ẩn đi
 
-In the project directory, you can run:
+3. Bấm vào các nút category, khi state typeBlog là 'All' thì sẽ render hết data, nếu ngược lại thì so sánh name button với title của data
 
-### `npm start`
+4. Click vào biểu tượng like thì set id đó vào state activeLike và update api
+-> Tạo biến isChecked để kiểm tra nếu tồn tại id đó trong mảng thì trả về mảng mới mà không có id đó (nếu chưa thì thêm vào)
+-> Tạo biến increasedLike để kiểm thay đổi UI, nếu có active thì render increasedLike và ngược lại
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. Click vào ảnh sẽ đi đến trang Detail và dispatch tới actio fecthUserData trong BlogData
+-> fetchUserData nhận được id và gọi api, khi nhận được res thì lưu vào userData, lấy state userData ra và render 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+6. Bấm vào nút comment thì set state toggleForm thành true để hiển thị và ngược lại
 
-### `npm test`
+7.Thêm mới user vào db, socket emit  client-have-new-blog truyền data xuống client , sau khi client nhận được thì dispatch tới action setNewBlog và set lại state list = list cũ(nếu có), data
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Tech: HTML, CSS , ReactJS, Redux toolkit, Node & Express, MySQL, Socket.io
+ -->
